@@ -67,7 +67,7 @@ router.post('/', bodyParser.urlencoded({ extended: true }), function(req, res, n
     return makeTweet(10);
   }
 
-  twitter.search(req.body.searchTerm, 100, function(err, data) {
+  twitter.search(req.body.searchTerm, 10000, function(err, data) {
     if (err) {
       throw err;
     } else {
