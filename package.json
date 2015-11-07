@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "postinstall": "node scripts/postinstall.js"
+    "postinstall": "node postinstall.js"
   },
   "devDependencies": {
     "browserify": "^12.0.1",
