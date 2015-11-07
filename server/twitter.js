@@ -19,16 +19,22 @@ var T = new Twit({
  * @param {function} next - the function to call with the results
  */
 function search(query, count, next) {
-    T.get('search/tweets', {
-        q     : query + '&since:2015-1-1',
-        count : count || 100
-    }, function(err, data, response) {
-        if (err) {
-            next(err);
-        } else {
-            next(null, data);
-        }
-    });
+    if (!query) {
+        var error = new Error('Query Missing');
+        error.status = 400;
+        next(error);
+    } else {
+        T.get('search/tweets', {
+            q     : query + '&since:2015-1-1',
+            count : count || 100
+        }, function(err, data, response) {
+            if (err) {
+                next(err);
+            } else {
+                next(null, data);
+            }
+        });
+    }
 }
 
 module.exports = {
