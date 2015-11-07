@@ -16,16 +16,17 @@ var T = new Twit({
  * A function to search past tweets based on a query, a date since, and a count.
  * @param {string} query - the query to search for
  * @param {int} count - the number of results to return
+ * @param {function} next - the function to call with the results
  */
-function search (query, count) {
+function search(query, count, next) {
     T.get('search/tweets', {
-        q     : query + 'since:2015-1-1',
+        q     : query + '&since:2015-1-1',
         count : count || 100
-    }, function (err, data, response) {
+    }, function(err, data, response) {
         if (err) {
-            throw new Error(err);
+            next(err);
         } else {
-            return data;
+            next(null, data);
         }
     });
 }

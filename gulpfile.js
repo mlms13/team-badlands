@@ -103,6 +103,7 @@ gulp.task('watch', ['lint'], function () {
 gulp.task('server', function () {
   nodemon({
     'script': 'app.js',
+    'ext': 'js,json,hbs',
     'ignore': ['.git', 'dist/**', 'client/**']
   });
 });
