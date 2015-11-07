@@ -12,13 +12,58 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', bodyParser.urlencoded({ extended: true }), function(req, res, next) {
-  twitter.search(req.body.searchTerm, 1, function(err, data) {
+
+  function generateTweet(tweets) {
+    var terminals = {};
+    var startwords = [];
+    var wordstats = {};
+
+    for (var i = 0; i < tweets.length; i++) {
+      var words = tweets[i].text.split(' ');
+      terminals[words[words.length-1]] = true;
+      startwords.push(words[0]);
+      for (var j = 0; j < words.length - 1; j++) {
+        if (wordstats.hasOwnProperty(words[j])) {
+          wordstats[words[j]].push(words[j+1]);
+        } else {
+          wordstats[words[j]] = [words[j+1]];
+        }
+      }
+    }
+
+    function choice(a) {
+      var i = Math.floor(a.length * Math.random());
+      return a[i];
+    }
+
+    function makeTweet(min_length) {
+      word = choice(startwords);
+      var tweet = [word];
+      while (wordstats.hasOwnProperty(word)) {
+        var next_words = wordstats[word];
+        word = choice(next_words);
+        tweet.push(word);
+
+        if (tweet.length > min_length && terminals.hasOwnProperty(word)) {
+          break;
+        }
+      }
+      if (tweet.length < min_length) {
+        return makeTweet(min_length);
+      }
+      return tweet.join(' ');
+    }
+
+    return makeTweet(10);
+  }
+
+  twitter.search(req.body.searchTerm, 100, function(err, data) {
     if (err) {
       throw err;
     } else {
       res.render('index', {
         title: 'Results - Team Badlands',
-        content: data.statuses[0].text
+        content: generateTweet(data.statuses)
       });
     }
   });
