@@ -73,6 +73,6 @@ twitter.stream(function(err, tweet) {
     var matches = matchKeywords(htmlEntities.decode(tweet.text), twitterKeywords);
 
     if (matches) {
-        console.log(matches);
+        console.log(matches, tweet.text);
     }
 });
