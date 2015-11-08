@@ -87,6 +87,8 @@ Game.prototype = {
 
     ground = new Ground(this, 0, this.game.height - 64, this.game.width, 64);
     world.addChild(ground);
+
+    this.dead = false;
   },
 
   update: function () {
@@ -100,11 +102,16 @@ Game.prototype = {
       // this.generateWalls();
     // }
 
+    if (this.dead) {
+      this.switchState('MainMenu');
+      return;
+    }
+
     // handle collisions
     this.game.physics.arcade.collide(this.character, ground);
 
     this.walls.forEach(function(wallGroup) {
-      this.game.physics.arcade.collide(this.character, wallGroup);
+      this.game.physics.arcade.collide(this.character, wallGroup, this.wallHandler);
     }, this);
 
     this.applyActions();
@@ -129,9 +136,11 @@ Game.prototype = {
     if (this.character.body.touching.down) {
       this.character.body.velocity.x += this.groundSpeed;
     }
+  },
 
-    if (this.character.body.blocked.left && this.character.body.blocked.right) {
-      console.log('ya dead');
+  wallHandler: function (character, wallGroup) {
+    if (character.position.x < 0) {
+      this.dead = true;
     }
   },
 
