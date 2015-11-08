@@ -5,7 +5,7 @@ MainMenu.prototype = {
     var mainTitle, startBtn, buttonBg;
 
     // create the big title
-    mainTitle = this.add.bitmapText(this.world.centerX, 100, 'Audiowide Glow', 'This Is Our Game', 64);
+    mainTitle = this.add.bitmapText(this.world.centerX, 100, 'Audiowide Glow', 'Polar Badlands', 64);
     mainTitle.align = 'center';
     mainTitle.updateText();
     mainTitle.x = this.world.centerX - (mainTitle.textWidth / 2);
