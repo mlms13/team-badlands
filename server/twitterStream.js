@@ -47,26 +47,29 @@ var twitterKeywords = [{
 }];
 
 twitterKeywords = twitterKeywords.map(function(item) {
-    item.regex = new RegExp('(?:^|\\s+)(#?' + item.regex + ')(?:\\s+|$)', 'gi');
+    item.regex = new RegExp('(^|\\s+)(#?' + item.regex + ')(\\s+|$)', 'gi');
     return item;
 });
 
 function matchKeywords(tweet, keywords) {
-    var matches = [],
+    var result = null,
         match;
 
     for (var i = 0, len = keywords.length; i < len; i++) {
-        match = keywords[i].regex.exec(htmlEntities.decode(tweet.text));
+        match = keywords[i].regex.test(htmlEntities.decode(tweet.text));
 
         if (match) {
-            matches.push(_.extend({
-                match: match,
+            tweet.text = htmlEntities.decode(tweet.text).replace(keywords[i].regex, '$1<span class="tweet__content--highlight">$2</span>$3');
+
+            result = _.extend({
                 tweet: template(tweet),
-            }, keywords[i]));
+            }, keywords[i]);
+
+            break;
         }
     }
 
-    return (matches.length ? matches : null);
+    return result;
 }
 
 twitter.stream(function(err, tweet) {
@@ -76,9 +79,9 @@ twitter.stream(function(err, tweet) {
         return;
     }
 
-    var matches = matchKeywords(tweet, twitterKeywords);
+    var match = matchKeywords(tweet, twitterKeywords);
 
-    if (matches) {
-        socket.emit('tweet', matches);
+    if (match) {
+        socket.emit('tweet', match);
     }
 });
