@@ -1,10 +1,11 @@
-var socket;
+var tweetDOM = document.querySelector('.live-tweet'),
+    socket;
 
 function init () {
-	socket  = io.connect('http://localhost:' + window.port);
+	socket = io.connect('http://localhost:' + window.port);
 
 	socket.on('tweet', function (data) {
-		console.log('We got new tweet data: ', data);
+        tweetDOM.innerHTML = data.tweet;
 	});
 }
 

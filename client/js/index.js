@@ -1,4 +1,5 @@
 var Phaser = window.Phaser;
+var socket = require('./socket').init();
 
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
 
