@@ -1,4 +1,5 @@
-// TODO: require entities here
+// require entities here
+var Character = require('../entities/character');
 
 function Game() {}
 
@@ -23,8 +24,11 @@ Game.prototype = {
     elapsed = 0;
 
     var world = this.add.sprite(0, 0, 'background');
-    // character = new Planet(this.game, this.world.centerX - 85, this.world.centerY - 85);
-    // space.addChild(character);
+    world.width = this.game.width;
+    world.height = this.game.height;
+    console.log(this.game.height);
+    character = new Character(this.game, 40, world.height);
+    world.addChild(character);
 
     clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
   },

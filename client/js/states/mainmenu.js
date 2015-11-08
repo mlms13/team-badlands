@@ -20,6 +20,7 @@ MainMenu.prototype = {
 
     // add a background for our play again button
     buttonBg = this.add.graphics();
+    buttonBg.alpha = 0;
     buttonBg.beginFill(0x999999, 0.1);
     buttonBg.drawRect(startBtn.x - 20, startBtn.y - 10, startBtn.width + 40, startBtn.height + 20);
     buttonBg.endFill();
