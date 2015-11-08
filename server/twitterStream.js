@@ -40,14 +40,14 @@ var twitterKeywords = [{
     regex: 'luigi',
     action: 'luigi',
     type: 'character'
-}, {
-    regex: 'rain(?:ing|ed)?',
-    action: 'rain',
-    type: 'weather'
-}, {
-    regex: 'snow(?:ing|ed)?',
-    action: 'snow',
-    type: 'weather'
+// }, {
+//     regex: 'rain(?:ing|ed)?',
+//     action: 'rain',
+//     type: 'weather'
+// }, {
+//     regex: 'snow(?:ing|ed)?',
+//     action: 'snow',
+//     type: 'weather'
 }, {
     regex: 'fart(?:ing|ed)?',
     action: 'fart',

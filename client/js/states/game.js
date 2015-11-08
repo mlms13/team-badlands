@@ -23,23 +23,14 @@ var ground;
 var jumpUp;
 var jetpackUp;
 
-// HUD stuff
+// score stuff
 var elapsed;
-var clock;
 var score;
 
 Game.prototype = {
 
-  _updateTime: function () {
-    var min = Math.floor(elapsed / 60),
-        sec = elapsed - (min * 60),
-        str = min + " min " + sec.toFixed(1) + " sec";
-
-    clock.text = str;
-  },
-
-  _updateFishCount: function() {
-    score.text = this.character.fishCount + " fish";
+  _updateScore: function () {
+    score.text = Math.floor(elapsed * 40) + this.character.fishCount * 100;
   },
 
   create: function () {
@@ -83,9 +74,7 @@ Game.prototype = {
     world.addChild(this.character);
     this.character.body.collideWorldBounds = true;
 
-    clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
-    score = this.add.bitmapText(this.game.width - 32, 32, 'Audiowide', '', 20);
-    score.anchor.set(1, 0);
+    score = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
 
     this.walls = this.game.add.group();
     this.fish = this.game.add.group();
@@ -94,9 +83,9 @@ Game.prototype = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
     // Generate walls
-    this.generateWalls();
-    // this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateWalls, this);
-    // this.wallGenerator.timer.start();
+    // this.generateWalls();
+    this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateWalls, this);
+    this.wallGenerator.timer.start();
 
     // Generate fish
     this.generateFish();
@@ -109,13 +98,12 @@ Game.prototype = {
     // never allow more than 250ms to be added per frame
     // which happens when you blur, then re-focus the tab
     elapsed += Math.min(this.time.elapsed / 1000, 0.25);
-    this._updateTime();
-    this._updateFishCount();
+    this._updateScore();
 
     // Generate walls more and more often as time passes
-    if (Math.floor(elapsed) % 2 === 0) {
-      this.generateWalls();
-    }
+    // if (Math.floor(elapsed) % 2 === 0) {
+      // this.generateWalls();
+    // }
 
     // handle collisions
     this.game.physics.arcade.collide(this.character, ground);
@@ -149,6 +137,10 @@ Game.prototype = {
 
     if (this.character.body.touching.down) {
       this.character.body.velocity.x += this.groundSpeed;
+    }
+
+    if (this.character.body.blocked.left && this.character.body.blocked.right) {
+      console.log('ya dead');
     }
   },
 
