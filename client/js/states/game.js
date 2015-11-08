@@ -76,6 +76,22 @@ Game.prototype = {
     ground = new Ground(this, 0, this.game.height - 64, this.game.width, 64);
     world.addChild(ground);
 
+    this.rainEmitter = this.add.emitter(world.centerX, 0, 400);
+    this.rainEmitter.width = this.world.width;
+    // emitter.angle = 30; // uncomment to set an angle for the rain.
+    this.rainEmitter.makeParticles('rain');
+
+    this.rainEmitter.minParticleScale = 0.1;
+    this.rainEmitter.maxParticleScale = 0.5;
+
+    this.rainEmitter.setYSpeed(300, 500);
+    this.rainEmitter.setXSpeed(-5, 5);
+
+    this.rainEmitter.minRotation = 0;
+    this.rainEmitter.maxRotation = 0;
+
+    this.rainEmitter.start(true, 1600, 5, 0);
+
   },
 
   update: function () {

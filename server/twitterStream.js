@@ -21,6 +21,10 @@ var twitterKeywords = [{
     action: 'faded',
     type: 'ui'
 }, {
+    regex: 'sober',
+    action: 'sober',
+    type: 'ui'
+}, {
     regex: 'sh(?:ake|aking|ook)',
     action: 'shake',
     type: 'ui'

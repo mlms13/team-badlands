@@ -7,6 +7,12 @@ function ui (game, action) {
         game.game.world.filters = null;
     }
 
+    if (action === 'faded') {
+        game.character.alpha = 0.35;
+    } else if (action === 'sober') {
+        game.character.alpha = 1;
+    }
+
     if (action === 'shake') {
         gameEl.classList.add('shake');
 
@@ -19,6 +25,8 @@ function ui (game, action) {
 }
 
 function weather (game, action) {
+    if (action === 'rain') {
+    }
 }
 
 function character (game, action) {
