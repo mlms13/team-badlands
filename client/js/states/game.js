@@ -40,11 +40,13 @@ Game.prototype = {
     // (re)set timers
     elapsed = 0;
 
-    var world = this.add.sprite(0, 0, 'background');
+    var world = this.add.tileSprite(0, 0, this.world.width, this.world.height, 'background');
+    world.autoScroll(-200 * 0.8, 0);
 
     character = new Character(this.game, 40, this.game.height - 200);
     this.game.physics.arcade.enable(character);
     world.addChild(character);
+    character.body.collideWorldBounds = true;
 
     ground = new Block(this.game, 0, this.game.height - 64, this.game.width, 64);
     this.game.physics.arcade.enable(ground);
