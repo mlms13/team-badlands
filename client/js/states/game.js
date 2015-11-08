@@ -8,7 +8,7 @@ var Block = require('../entities/block');
 
 // require modules here
 var Ground = require('../modules/ground');
-var WallGroup = require('../modules/WallGroup');
+var WallGroup = require('../modules/wallGroup');
 
 function Game() {
   this.characterSpeed = 200;
