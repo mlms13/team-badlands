@@ -42,22 +42,28 @@ function character (game, action) {
 function powerup (game, action) {
     if (action === 'turbo') {
         game.characterSpeed += 100;
-        setTimeout(powerupReset, 5000);
+        setTimeout(function () {
+            powerupReset(game);
+        }, 5000);
         delete game.actions.powerup;
     }
     if (action === 'fart') {
         game.characterSpeed += 250;
-        setTimeout(powerupReset, 100);
+        setTimeout(function () {
+            powerupReset(game);
+        }, 100);
         delete game.actions.powerup;
     }
     if (action === 'netflixandchill') {
         game.characterSpeed -= 100;
-        setTimeout(powerupReset, 5000);
+        setTimeout(function () {
+            powerupReset(game);
+        }, 5000);
         delete game.actions.powerup;
     }
 }
 
-function powerupReset () {
+function powerupReset (game) {
     game.characterSpeed = 200;
 }
 

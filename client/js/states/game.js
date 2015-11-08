@@ -81,9 +81,9 @@ Game.prototype = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
     // Generate walls
-    this.generateWalls();
-    // this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateWalls, this);
-    // this.wallGenerator.timer.start();
+    // this.generateWalls();
+    this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateWalls, this);
+    this.wallGenerator.timer.start();
 
     ground = new Ground(this, 0, this.game.height - 64, this.game.width, 64);
     world.addChild(ground);
@@ -96,9 +96,9 @@ Game.prototype = {
     this._updateScore();
 
     // Generate walls more and more often as time passes
-    if (Math.floor(elapsed) % 2 === 0) {
-      this.generateWalls();
-    }
+    // if (Math.floor(elapsed) % 2 === 0) {
+      // this.generateWalls();
+    // }
 
     // handle collisions
     this.game.physics.arcade.collide(this.character, ground);
@@ -128,6 +128,10 @@ Game.prototype = {
 
     if (this.character.body.touching.down) {
       this.character.body.velocity.x += this.groundSpeed;
+    }
+
+    if (this.character.body.blocked.left && this.character.body.blocked.right) {
+      console.log('ya dead');
     }
   },
 
