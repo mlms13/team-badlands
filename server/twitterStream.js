@@ -6,7 +6,7 @@ var twitter = require('./twitter');
 var htmlEntities = new Entities();
 
 var twitterKeywords = [{
-    regex: '(?:black\s*(?:and|&)\s*white)',
+    regex: 'black\\s*(?:and|&)\\s*white',
     action: 'blackandwhite',
 }, {
     regex: 'color',
@@ -15,7 +15,7 @@ var twitterKeywords = [{
     regex: 'faded',
     action: 'faded',
 }, {
-    regex: 'shake',
+    regex: 'shak(?:e|ing)',
     action: 'shake',
 }, {
     regex: 'trump',
@@ -27,22 +27,21 @@ var twitterKeywords = [{
     regex: 'luigi',
     action: 'luigi',
 }, {
-    regex: 'rain',
+    regex: 'rain(?:ing|ed)?',
     action: 'rain',
 }, {
-    regex: 'snow',
+    regex: 'snow(?:ing|ed)?',
     action: 'snow',
 }, {
-    regex: 'fart',
+    regex: 'fart(?:ing|ed)?',
     action: 'fart',
 }, {
-    regex: '(?:netflix.*?chill)',
+    regex: 'netflix.*?chill',
     action: 'netflixandchill',
 }];
 
 twitterKeywords = twitterKeywords.map(function(item) {
-    var regex = new RegExp(item.regex, 'gi');
-    item.regex = regex;
+    item.regex = new RegExp('(?:^|\\s+|#)(' + item.regex + ')(?:\\s+|$)', 'gi');
     return item;
 });
 
@@ -51,7 +50,7 @@ function matchKeywords(str, keywords) {
         match;
 
     for (var i = 0, len = keywords.length; i < len; i++) {
-        match = str.match(keywords[i].regex);
+        match = keywords[i].regex.exec(str);
 
         if (match) {
             matches.push(_.extend({
@@ -73,6 +72,6 @@ twitter.stream(function(err, tweet) {
     var matches = matchKeywords(htmlEntities.decode(tweet.text), twitterKeywords);
 
     if (matches) {
-        console.log(matches, tweet.text);
+        console.log(matches);
     }
 });
