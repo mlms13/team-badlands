@@ -124,7 +124,9 @@ Game.prototype = {
       this.game.physics.arcade.collide(this.character, wallGroup);
     }, this);
 
-    // this.fish
+    this.fish.forEachExists(function(fish) {
+      this.game.physics.arcade.overlap(this.character, fish, this.catchFish);
+    }, this);
 
     this.applyActions();
 
@@ -148,6 +150,11 @@ Game.prototype = {
     if (this.character.body.touching.down) {
       this.character.body.velocity.x += this.groundSpeed;
     }
+  },
+
+  catchFish: function (char, fish) {
+    char.fishCount++;
+    fish.destroy();
   },
 
   setupListeners: function () {

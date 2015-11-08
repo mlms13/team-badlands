@@ -23,7 +23,7 @@ FishGroup.prototype.addFish = function() {
 };
 
 FishGroup.prototype.update = function() {
-  this.fishes.forEach(function (fish) {
+  this.forEachExists(function (fish) {
     if (!fish.inWorld) {
       fish.exists = false;
     }
