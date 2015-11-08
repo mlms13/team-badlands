@@ -107,4 +107,4 @@ gulp.task('server', function () {
   });
 });
 
-gulp.task('default', ['copy:html', 'copy:assets', 'stylus', 'server', 'watch']);
+gulp.task('default', ['copy:lib', 'copy:assets', 'stylus', 'server', 'watch']);
