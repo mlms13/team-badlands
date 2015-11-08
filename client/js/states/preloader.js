@@ -13,6 +13,7 @@ Preloader.prototype = {
     this.load.image('mario', 'assets/mario.png');
     this.load.image('luigi', 'assets/luigi.png');
     this.load.image('ice', 'assets/ice.png');
+    this.load.image('fish', 'assets/fish.png');
     this.load.bitmapFont('Audiowide Glow', 'assets/audiowide/glow.png', 'assets/audiowide/glow.fnt');
     this.load.bitmapFont('Audiowide', 'assets/audiowide/small.png', 'assets/audiowide/small.fnt');
 

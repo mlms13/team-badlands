@@ -9,6 +9,7 @@ var Block = require('../entities/block');
 // require modules here
 var Ground = require('../modules/ground');
 var WallGroup = require('../modules/wallGroup');
+var FishGroup = require('../modules/fishGroup');
 
 function Game() {
   this.characterSpeed = 200;
@@ -64,6 +65,7 @@ Game.prototype = {
     clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
 
     this.walls = this.game.add.group();
+    this.fish = this.game.add.group();
 
     // set up all the basic key handlers
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -72,6 +74,9 @@ Game.prototype = {
     this.generateWalls();
     this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 3, this.generateWalls, this);
     this.wallGenerator.timer.start();
+
+    // Generate fish
+    this.generateFish();
 
     ground = new Ground(this, 0, this.game.height - 64, this.game.width, 64);
     world.addChild(ground);
@@ -140,6 +145,15 @@ Game.prototype = {
     }
 
     wallGroup.reset(this.game.width, wallY);
+  },
+
+  generateFish: function() {
+    var fishGroup = this.fish.getFirstExists(false);
+    if (!fishGroup) {
+      fishGroup = new FishGroup(this, this.fish);
+    }
+
+    fishGroup.addFish();
   }
 };
 
