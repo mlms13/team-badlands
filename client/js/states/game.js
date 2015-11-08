@@ -23,9 +23,10 @@ var ground;
 var jumpUp;
 var jetpackUp;
 
-// clock stuff
+// HUD stuff
 var elapsed;
 var clock;
+var score;
 
 Game.prototype = {
 
@@ -35,6 +36,10 @@ Game.prototype = {
         str = min + " min " + sec.toFixed(1) + " sec";
 
     clock.text = str;
+  },
+
+  _updateFishCount: function() {
+    score.text = this.character.fishCount + " fish";
   },
 
   create: function () {
@@ -79,6 +84,8 @@ Game.prototype = {
     this.character.body.collideWorldBounds = true;
 
     clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
+    score = this.add.bitmapText(this.game.width - 32, 32, 'Audiowide', '', 20);
+    score.anchor.set(1, 0);
 
     this.walls = this.game.add.group();
     this.fish = this.game.add.group();
@@ -103,6 +110,7 @@ Game.prototype = {
     // which happens when you blur, then re-focus the tab
     elapsed += Math.min(this.time.elapsed / 1000, 0.25);
     this._updateTime();
+    this._updateFishCount();
 
     // Generate walls more and more often as time passes
     if (Math.floor(elapsed) % 2 === 0) {
@@ -115,6 +123,8 @@ Game.prototype = {
     this.walls.forEach(function(wallGroup) {
       this.game.physics.arcade.collide(this.character, wallGroup);
     }, this);
+
+    // this.fish
 
     this.applyActions();
 
