@@ -2,6 +2,7 @@ var Entities = require('html-entities').AllHtmlEntities;
 var _ = require('lodash');
 
 var twitter = require('./twitter');
+var socket = require('./socket');
 
 var htmlEntities = new Entities();
 
@@ -41,20 +42,21 @@ var twitterKeywords = [{
 }];
 
 twitterKeywords = twitterKeywords.map(function(item) {
-    item.regex = new RegExp('(?:^|\\s+|#)(' + item.regex + ')(?:\\s+|$)', 'gi');
+    item.regex = new RegExp('(?:^|\\s+)(#?' + item.regex + ')(?:\\s+|$)', 'gi');
     return item;
 });
 
-function matchKeywords(str, keywords) {
+function matchKeywords(tweet, keywords) {
     var matches = [],
         match;
 
     for (var i = 0, len = keywords.length; i < len; i++) {
-        match = keywords[i].regex.exec(str);
+        match = keywords[i].regex.exec(htmlEntities.decode(tweet.text));
 
         if (match) {
             matches.push(_.extend({
                 match: match,
+                tweet: tweet,
             }, keywords[i]));
         }
     }
@@ -69,9 +71,9 @@ twitter.stream(function(err, tweet) {
         return;
     }
 
-    var matches = matchKeywords(htmlEntities.decode(tweet.text), twitterKeywords);
+    var matches = matchKeywords(tweet, twitterKeywords);
 
     if (matches) {
-        console.log(matches);
+        socket.emit('tweet', matches);
     }
 });
