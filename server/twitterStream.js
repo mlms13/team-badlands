@@ -18,7 +18,7 @@ var twitterKeywords = [{
     regex: 'faded',
     action: 'faded',
 }, {
-    regex: 'shak(?:e|ing)',
+    regex: 'sh(?:ake|aking|ook)',
     action: 'shake',
 }, {
     regex: 'trump',
