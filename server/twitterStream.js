@@ -41,6 +41,9 @@ var twitterKeywords = [{
 }, {
     regex: 'netflix.*?chill',
     action: 'netflixandchill',
+}, {
+    regex: 'turbo',
+    action: 'turbo'
 }];
 
 twitterKeywords = twitterKeywords.map(function(item) {
