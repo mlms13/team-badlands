@@ -22,18 +22,14 @@ var ground;
 var jumpUp;
 var jetpackUp;
 
-// clock stuff
+// score stuff
 var elapsed;
-var clock;
+var score;
 
 Game.prototype = {
 
-  _updateTime: function () {
-    var min = Math.floor(elapsed / 60),
-        sec = elapsed - (min * 60),
-        str = min + " min " + sec.toFixed(1) + " sec";
-
-    clock.text = str;
+  _updateScore: function () {
+    score.text = Math.floor(elapsed * 40);
   },
 
   create: function () {
@@ -77,7 +73,7 @@ Game.prototype = {
     world.addChild(this.character);
     this.character.body.collideWorldBounds = true;
 
-    clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
+    score = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
 
     this.walls = this.game.add.group();
 
@@ -97,7 +93,7 @@ Game.prototype = {
     // never allow more than 250ms to be added per frame
     // which happens when you blur, then re-focus the tab
     elapsed += Math.min(this.time.elapsed / 1000, 0.25);
-    this._updateTime();
+    this._updateScore();
 
     // Generate walls more and more often as time passes
     if (Math.floor(elapsed) % 2 === 0) {
