@@ -82,6 +82,8 @@ Game.prototype = {
       character.body.velocity.x = -200;
     } else if (this.cursors.right.isDown) {
       character.body.velocity.x = 200;
+    } else if (character.body.touching.down) {
+      character.body.velocity.x = -200 * 0.7;
     } else {
       character.body.velocity.x = 0;
     }
