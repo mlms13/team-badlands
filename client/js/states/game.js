@@ -1,3 +1,5 @@
+var socket = require('../socket');
+
 // require entities here
 var Character = require('../entities/character');
 var Block = require('../entities/block');
@@ -27,6 +29,8 @@ Game.prototype = {
   },
 
   create: function () {
+    socket.init();
+
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.setTo(0, 900);
 
