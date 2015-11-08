@@ -11,39 +11,51 @@ var htmlEntities = new Entities();
 var twitterKeywords = [{
     regex: 'black\\s*(?:and|&)\\s*white',
     action: 'blackandwhite',
+    type: 'ui'
 }, {
     regex: 'color',
     action: 'color',
+    type: 'ui'
 }, {
     regex: 'faded',
     action: 'faded',
+    type: 'ui'
 }, {
     regex: 'sh(?:ake|aking|ook)',
     action: 'shake',
+    type: 'ui'
 }, {
     regex: 'trump',
     action: 'trump',
+    type: 'character'
 }, {
     regex: 'mario',
     action: 'mario',
+    type: 'character'
 }, {
     regex: 'luigi',
     action: 'luigi',
+    type: 'character'
 }, {
     regex: 'rain(?:ing|ed)?',
     action: 'rain',
+    type: 'weather'
 }, {
     regex: 'snow(?:ing|ed)?',
     action: 'snow',
+    type: 'weather'
 }, {
     regex: 'fart(?:ing|ed)?',
     action: 'fart',
+    type: 'powerup'
 }, {
     regex: 'netflix.*?chill',
     action: 'netflixandchill',
+    type: 'powerup'
 }, {
     regex: 'turbo',
-    action: 'turbo'
+    action: 'turbo',
+    type: 'powerup'
 }];
 
 twitterKeywords = twitterKeywords.map(function(item) {

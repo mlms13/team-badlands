@@ -1,4 +1,5 @@
 var socket = require('../socket');
+var sock;
 
 // require entities here
 var Character = require('../entities/character');
@@ -29,7 +30,9 @@ Game.prototype = {
   },
 
   create: function () {
-    socket.init();
+    sock = socket.init();
+    this.setupListeners();
+    this.actions = {};
 
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.setTo(0, 900);
@@ -68,6 +71,7 @@ Game.prototype = {
 
     // handle collisions
     this.game.physics.arcade.collide(character, ground);
+    this.applyActions();
 
     // handle movement
     if (jumpUp.isDown && character.body.touching.down) {
@@ -87,6 +91,19 @@ Game.prototype = {
     } else {
       character.body.velocity.x = 0;
     }
+  },
+
+  setupListeners: function () {
+    sock.on('tweet', function (data) {
+      var type   = data.type;
+      var action = data.action;
+
+      this.actions[type] = action;
+      console.log(this.actions)
+    }.bind(this));
+  },
+
+  applyActions: function () {
 
   }
 };
