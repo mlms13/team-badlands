@@ -17,6 +17,8 @@ Preloader.prototype = {
     this.load.bitmapFont('Audiowide Glow', 'assets/audiowide/glow.png', 'assets/audiowide/glow.fnt');
     this.load.bitmapFont('Audiowide', 'assets/audiowide/small.png', 'assets/audiowide/small.fnt');
 
+    this.load.spritesheet('rain', 'assets/rain.png', 17, 17);
+
     this.load.script('Gray', 'assets/filters/Gray.js');
   },
   create: function () {

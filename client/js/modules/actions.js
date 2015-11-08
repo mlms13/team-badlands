@@ -7,6 +7,12 @@ function ui (game, action) {
         game.game.world.filters = null;
     }
 
+    if (action === 'faded') {
+        game.character.alpha = 0.35;
+    } else if (action === 'sober') {
+        game.character.alpha = 1;
+    }
+
     if (action === 'shake') {
         gameEl.classList.add('shake');
 
@@ -19,6 +25,8 @@ function ui (game, action) {
 }
 
 function weather (game, action) {
+    if (action === 'rain') {
+    }
 }
 
 function character (game, action) {
@@ -32,7 +40,25 @@ function character (game, action) {
 }
 
 function powerup (game, action) {
+    if (action === 'turbo') {
+        game.characterSpeed += 100;
+        setTimeout(powerupReset, 5000);
+        delete game.actions.powerup;
+    }
+    if (action === 'fart') {
+        game.characterSpeed += 250;
+        setTimeout(powerupReset, 100);
+        delete game.actions.powerup;
+    }
+    if (action === 'netflixandchill') {
+        game.characterSpeed -= 100;
+        setTimeout(powerupReset, 5000);
+        delete game.actions.powerup;
+    }
+}
 
+function powerupReset () {
+    game.characterSpeed = 200;
 }
 
 module.exports = {

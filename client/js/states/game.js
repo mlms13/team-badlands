@@ -13,7 +13,7 @@ var FishGroup = require('../modules/fishGroup');
 
 function Game() {
   this.characterSpeed = 200;
-  this.groundSpeed = this.characterSpeed * - 0.7;
+  this.groundSpeed = this.characterSpeed * - 2.5;
 }
 
 // sprites and groups
@@ -41,6 +41,22 @@ Game.prototype = {
     sock = socket.init();
     this.setupListeners();
     this.actions = {};
+
+    this.rainEmitter = this.add.emitter(this.world.centerX, 0, 400);
+    this.rainEmitter.width = this.world.width;
+    // emitter.angle = 30; // uncomment to set an angle for the rain.
+    this.rainEmitter.makeParticles('rain');
+
+    this.rainEmitter.minParticleScale = 0.1;
+    this.rainEmitter.maxParticleScale = 0.5;
+
+    this.rainEmitter.setYSpeed(300, 500);
+    this.rainEmitter.setXSpeed(-5, 5);
+
+    this.rainEmitter.minRotation = 0;
+    this.rainEmitter.maxRotation = 0;
+
+    this.rainEmitter.start(true, 1600, 5, 0);
 
     this.grayFilter = this.add.filter('Gray');
     this.grayFilter.gray = 1;
@@ -72,15 +88,14 @@ Game.prototype = {
 
     // Generate walls
     this.generateWalls();
-    this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 3, this.generateWalls, this);
-    this.wallGenerator.timer.start();
+    // this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateWalls, this);
+    // this.wallGenerator.timer.start();
 
     // Generate fish
     this.generateFish();
 
     ground = new Ground(this, 0, this.game.height - 64, this.game.width, 64);
     world.addChild(ground);
-
   },
 
   update: function () {
@@ -88,6 +103,11 @@ Game.prototype = {
     // which happens when you blur, then re-focus the tab
     elapsed += Math.min(this.time.elapsed / 1000, 0.25);
     this._updateTime();
+
+    // Generate walls more and more often as time passes
+    if (Math.floor(elapsed) % 2 === 0) {
+      this.generateWalls();
+    }
 
     // handle collisions
     this.game.physics.arcade.collide(this.character, ground);
@@ -126,7 +146,6 @@ Game.prototype = {
       var action = data.action;
 
       this.actions[type] = action;
-      console.log(this.actions);
     }.bind(this));
   },
 
@@ -137,7 +156,7 @@ Game.prototype = {
   },
 
   generateWalls: function() {
-    var wallY = this.game.rnd.integerInRange(this.game.height * -1, -128);
+    var wallY = Math.floor(Math.random() * ((this.game.height - 128) / 64) + 3) * -64;
     var wallGroup = this.walls.getFirstExists(false);
 
     if (!wallGroup) {
