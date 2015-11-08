@@ -1,3 +1,4 @@
+var actions = require('../modules/actions');
 var socket = require('../socket');
 var sock;
 
@@ -15,7 +16,6 @@ function Game() {
 }
 
 // sprites and groups
-var character;
 var ground;
 
 // keyboard helpers
@@ -41,6 +41,9 @@ Game.prototype = {
     this.setupListeners();
     this.actions = {};
 
+    this.grayFilter = this.add.filter('Gray');
+    this.grayFilter.gray = 1;
+
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.setTo(0, 900);
 
@@ -53,10 +56,10 @@ Game.prototype = {
     var world = this.add.tileSprite(0, 0, this.world.width, this.world.height, 'background');
     world.autoScroll(this.characterSpeed * -0.3, 0);
 
-    character = new Character(this.game, 40, this.game.height - 200);
-    this.game.physics.arcade.enable(character);
-    world.addChild(character);
-    character.body.collideWorldBounds = true;
+    this.character = new Character(this.game, 40, this.game.height - 200);
+    this.game.physics.arcade.enable(this.character);
+    world.addChild(this.character);
+    this.character.body.collideWorldBounds = true;
 
     clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
 
@@ -82,33 +85,33 @@ Game.prototype = {
     this._updateTime();
 
     // handle collisions
-    this.game.physics.arcade.collide(character, ground);
+    this.game.physics.arcade.collide(this.character, ground);
 
     this.walls.forEach(function(wallGroup) {
-      this.game.physics.arcade.collide(character, wallGroup);
+      this.game.physics.arcade.collide(this.character, wallGroup);
     }, this);
 
     this.applyActions();
 
     // handle movement
-    if (jumpUp.isDown && character.body.touching.down) {
-      character.body.velocity.y = -300;
+    if (jumpUp.isDown && this.character.body.touching.down) {
+      this.character.body.velocity.y = -300;
     }
 
-    if (jetpackUp.isDown && character.fuel > 0) {
-      character.body.velocity.y = -300;
+    if (jetpackUp.isDown && this.character.fuel > 0) {
+      this.character.body.velocity.y = -300;
     }
 
     if (this.cursors.left.isDown) {
-      character.body.velocity.x = this.characterSpeed * - 1;
+      this.character.body.velocity.x = this.characterSpeed * - 1;
     } else if (this.cursors.right.isDown) {
-      character.body.velocity.x = this.characterSpeed;
+      this.character.body.velocity.x = this.characterSpeed;
     } else {
-      character.body.velocity.x = 0;
+      this.character.body.velocity.x = 0;
     }
 
-    if (character.body.touching.down) {
-      character.body.velocity.x += this.groundSpeed;
+    if (this.character.body.touching.down) {
+      this.character.body.velocity.x += this.groundSpeed;
     }
   },
 
@@ -123,7 +126,9 @@ Game.prototype = {
   },
 
   applyActions: function () {
-
+    for (var type in this.actions) {
+      actions[type](this, this.actions[type]);
+    }
   },
 
   generateWalls: function() {

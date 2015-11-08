@@ -9,9 +9,14 @@ Preloader.prototype = {
     // start loading the rest of the assets
     this.load.image('background', 'assets/background.png');
     this.load.image('penguin', 'assets/penguin.png');
+    this.load.image('trump', 'assets/trump.png');
+    this.load.image('mario', 'assets/mario.png');
+    this.load.image('luigi', 'assets/luigi.png');
     this.load.image('ice', 'assets/ice.png');
     this.load.bitmapFont('Audiowide Glow', 'assets/audiowide/glow.png', 'assets/audiowide/glow.fnt');
     this.load.bitmapFont('Audiowide', 'assets/audiowide/small.png', 'assets/audiowide/small.fnt');
+
+    this.load.script('Gray', 'assets/filters/Gray.js');
   },
   create: function () {
     this.game.state.start('Main Menu');
