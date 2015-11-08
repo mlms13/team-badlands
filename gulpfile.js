@@ -13,9 +13,10 @@ var gulp = require('gulp'),
 
 // configuration
 var paths = {
-  html: {
-    all: ['./client/index.html'],
-    dest: './dist'
+  lib: {
+    all: ['./node_modules/phaser/build/phaser.min.js',
+         './node_modules/phaser/build/phaser.map'],
+    dest: './dist/js'
   },
   assets: {
     all: ['./client/assets/**/*'],
@@ -33,9 +34,9 @@ var paths = {
   }
 };
 
-gulp.task('copy:html', function () {
-  return gulp.src(paths.html.all)
-    .pipe(gulp.dest(paths.html.dest))
+gulp.task('copy:lib', function () {
+  return gulp.src(paths.lib.all)
+    .pipe(gulp.dest(paths.lib.dest))
     .pipe(lr());
 });
 
@@ -92,7 +93,6 @@ gulp.task('watch', ['lint'], function () {
 
   bundler.on('update', rebundle);
   gulp.watch(paths.js.all, ['lint']);
-  gulp.watch(paths.html.all, ['copy:html']);
   gulp.watch(paths.assets.all, ['copy:assets']);
   gulp.watch(paths.stylus.all, ['stylus']);
 

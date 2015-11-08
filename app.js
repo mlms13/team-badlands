@@ -11,6 +11,8 @@ var index = require('./routes/index');
 
 // Create the express instance
 var app = express();
+var server = require('http').Server(app);
+var socket = require('./server/socket').init(server);
 
 // Add Handlebars templating engine
 app.engine('hbs', hbs.__express);
@@ -40,4 +42,4 @@ app.use(function(err, req, res, next) {
 });
 
 var port = process.env.PORT || 8080;
-app.listen(port);
+server.listen(port);
