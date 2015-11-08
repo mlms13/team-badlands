@@ -1,4 +1,5 @@
 var gameEl = document.getElementById('game');
+var text;
 
 function ui (game, action) {
     if (action === 'blackandwhite') {
@@ -15,6 +16,10 @@ function ui (game, action) {
 
     if (action === 'shake') {
         gameEl.classList.add('shake');
+        text = game.add.bitmapText(game.world.centerX - 50, 32, 'Audiowide', 'SHAKE IT', 20);
+        setTimeout(function () {
+            game.world.remove(text);
+        }, 2500);
 
         setTimeout(function () {
             gameEl.classList.remove('shake');
@@ -41,6 +46,10 @@ function character (game, action) {
 
 function powerup (game, action) {
     if (action === 'turbo') {
+        text = game.add.bitmapText(game.world.centerX - 100, 32, 'Audiowide', 'TURBO SPEED UP!', 20);
+        setTimeout(function () {
+            game.world.remove(text);
+        }, 2500);
         game.characterSpeed += 100;
         setTimeout(function () {
             powerupReset(game);
@@ -48,6 +57,10 @@ function powerup (game, action) {
         delete game.actions.powerup;
     }
     if (action === 'fart') {
+        text = game.add.bitmapText(game.world.centerX - 100, 32, 'Audiowide', 'FART SPEED UP!', 20);
+        setTimeout(function () {
+            game.world.remove(text);
+        }, 2500);
         game.characterSpeed += 250;
         setTimeout(function () {
             powerupReset(game);
@@ -55,6 +68,10 @@ function powerup (game, action) {
         delete game.actions.powerup;
     }
     if (action === 'netflixandchill') {
+        text = game.add.bitmapText(game.world.centerX - 250, 32, 'Audiowide', 'NETFLIX AND CHILL: SPEED DOWN!', 20);
+        setTimeout(function () {
+            game.world.remove(text);
+        }, 2500);
         game.characterSpeed -= 100;
         setTimeout(function () {
             powerupReset(game);
