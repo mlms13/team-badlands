@@ -19,10 +19,6 @@ var paths = {
          './node_modules/phaser/build/phaser.map'],
     dest: './dist/js'
   },
-  html: {
-    all: ['./client/index.html'],
-    dest: './dist'
-  },
   assets: {
     all: ['./client/assets/**/*'],
     dest: './dist/assets/'
@@ -38,12 +34,6 @@ var paths = {
     dest: './dist/css'
   }
 };
-
-gulp.task('copy:html', function () {
-  return gulp.src(paths.html.all)
-    .pipe(gulp.dest(paths.html.dest))
-    .pipe(lr());
-});
 
 gulp.task('copy:lib', function () {
   return gulp.src(paths.lib.all)
@@ -104,7 +94,6 @@ gulp.task('watch', ['lint'], function () {
 
   bundler.on('update', rebundle);
   gulp.watch(paths.js.all, ['lint']);
-  gulp.watch(paths.html.all, ['copy:html']);
   gulp.watch(paths.assets.all, ['copy:assets']);
   gulp.watch(paths.stylus.all, ['stylus']);
 
@@ -119,6 +108,6 @@ gulp.task('server', function () {
   });
 });
 
-gulp.task('default', ['copy:html', 'copy:assets', 'stylus', 'server', 'watch'], function () {
+gulp.task('default', ['copy:assets', 'stylus', 'server', 'watch'], function () {
   open('http://localhost:8080');
 });
