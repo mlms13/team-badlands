@@ -6,12 +6,12 @@ function init (server) {
 	socket.on('connection', onSocketConnection);
 }
 
-function emit (type, data) {
-	socket.emit(type, data);
-}
-
 function onSocketConnection (s) {
 	console.log('A new socket connection has been made.');
+}
+
+function emit (type, data) {
+	socket.emit(type, data);
 }
 
 module.exports = {
