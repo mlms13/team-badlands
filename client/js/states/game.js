@@ -10,6 +10,7 @@ var Block = require('../entities/block');
 var Ground = require('../modules/ground');
 var WallGroup = require('../modules/wallGroup');
 var FishGroup = require('../modules/fishGroup');
+var Scoreboard = require('../modules/scoreboard');
 
 function Game() {
   this.characterSpeed = 200;
@@ -81,6 +82,19 @@ Game.prototype = {
   },
 
   update: function () {
+
+    if (this.dead) {
+      this.walls.callAll('stop');
+      this.wallGenerator.timer.stop();
+      ground.stopScroll();
+      this.scoreboard = new Scoreboard(this.game);
+      this.game.add.existing(this.scoreboard);
+      this.scoreboard.show(score.text);
+      this.character.kill();
+
+      return;
+    }
+
     // never allow more than 250ms to be added per frame
     // which happens when you blur, then re-focus the tab
     elapsed += Math.min(this.time.elapsed / 1000, 0.25);
@@ -90,11 +104,6 @@ Game.prototype = {
     // if (Math.floor(elapsed) % 2 === 0) {
       // this.generateWalls();
     // }
-
-    if (this.dead) {
-      this.switchState('MainMenu');
-      return;
-    }
 
     // handle collisions
     this.game.physics.arcade.collide(this.character, ground);
