@@ -25,7 +25,7 @@ function search(query, count, next) {
         next(error);
     } else {
         T.get('search/tweets', {
-            q     : query + '&since:2015-1-1',
+            q     : query + '&since:2012-1-1',
             count : count || 100
         }, function(err, data, response) {
             if (err) {

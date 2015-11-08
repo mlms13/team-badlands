@@ -13,6 +13,11 @@ var gulp = require('gulp'),
 
 // configuration
 var paths = {
+  lib: {
+    all: ['./node_modules/phaser/build/phaser.min.js',
+         './node_modules/phaser/build/phaser.map'],
+    dest: './dist/js'
+  },
   html: {
     all: ['./client/index.html'],
     dest: './dist'
@@ -36,6 +41,12 @@ var paths = {
 gulp.task('copy:html', function () {
   return gulp.src(paths.html.all)
     .pipe(gulp.dest(paths.html.dest))
+    .pipe(lr());
+});
+
+gulp.task('copy:lib', function () {
+  return gulp.src(paths.lib.all)
+    .pipe(gulp.dest(paths.lib.dest))
     .pipe(lr());
 });
 
