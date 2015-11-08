@@ -41,7 +41,7 @@ Game.prototype = {
     elapsed = 0;
 
     var world = this.add.tileSprite(0, 0, this.world.width, this.world.height, 'background');
-    world.autoScroll(-200 * 0.8, 0);
+    world.autoScroll(-200 * 0.3, 0);
 
     character = new Character(this.game, 40, this.game.height - 200);
     this.game.physics.arcade.enable(character);
@@ -52,6 +52,7 @@ Game.prototype = {
     this.game.physics.arcade.enable(ground);
     ground.body.immovable = true;
     ground.body.allowGravity = false;
+    ground.autoScroll(-200 * 0.7, 0);
     world.addChild(ground);
     clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
 
