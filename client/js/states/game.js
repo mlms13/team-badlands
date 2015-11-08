@@ -31,6 +31,9 @@ Game.prototype = {
   create: function () {
     socket.init();
 
+    this.setupListeners();
+    // todo: initialize way of organizing powerups
+
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.setTo(0, 900);
 
@@ -84,7 +87,17 @@ Game.prototype = {
     } else {
       character.body.velocity.x = 0;
     }
+  },
 
+  setupListeners: function () {
+    socket.on('tweet', function (data) {
+      var action = data.action;
+      var tweet  = data.tweet;
+
+      // todo: somehow handle organization of powerups
+
+      console.log(data);
+    });
   }
 };
 
