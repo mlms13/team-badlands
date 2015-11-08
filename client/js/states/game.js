@@ -116,7 +116,7 @@ Game.prototype = {
     this.game.physics.arcade.collide(this.character, ground);
 
     this.walls.forEach(function(wallGroup) {
-      this.game.physics.arcade.collide(this.character, wallGroup, this.wallHandler);
+      this.game.physics.arcade.collide(this.character, wallGroup, this.wallHandler, null, this);
     }, this);
 
     this.fish.forEachExists(function(fish) {
