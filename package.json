@@ -25,7 +25,6 @@
     "gulp-util": "^3.0.7",
     "jshint-stylish": "^2.0.1",
     "nodemon": "^1.8.1",
-    "open": "0.0.5",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.0"
   }

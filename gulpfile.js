@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     lr = require('gulp-livereload'),
     nodemon = require('nodemon'),
-    open = require('open'),
     source = require('vinyl-source-stream'),
     stylish = require('jshint-stylish'),
     stylus = require('gulp-stylus'),
@@ -108,6 +107,4 @@ gulp.task('server', function () {
   });
 });
 
-gulp.task('default', ['copy:html', 'copy:assets', 'stylus', 'server', 'watch'], function () {
-  open('http://localhost:8080');
-});
+gulp.task('default', ['copy:html', 'copy:assets', 'stylus', 'server', 'watch']);
