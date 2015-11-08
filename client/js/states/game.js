@@ -12,7 +12,7 @@ var WallGroup = require('../modules/wallGroup');
 
 function Game() {
   this.characterSpeed = 200;
-  this.groundSpeed = this.characterSpeed * - 0.7;
+  this.groundSpeed = this.characterSpeed * - 2.5;
 }
 
 // sprites and groups
@@ -86,8 +86,8 @@ Game.prototype = {
 
     // Generate walls
     this.generateWalls();
-    this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 3, this.generateWalls, this);
-    this.wallGenerator.timer.start();
+    // this.wallGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2, this.generateWalls, this);
+    // this.wallGenerator.timer.start();
 
     ground = new Ground(this, 0, this.game.height - 64, this.game.width, 64);
     world.addChild(ground);
@@ -98,6 +98,11 @@ Game.prototype = {
     // which happens when you blur, then re-focus the tab
     elapsed += Math.min(this.time.elapsed / 1000, 0.25);
     this._updateTime();
+
+    // Generate walls more and more often as time passes
+    if (Math.floor(elapsed) % 2 === 0) {
+      this.generateWalls();
+    }
 
     // handle collisions
     this.game.physics.arcade.collide(this.character, ground);
@@ -136,7 +141,6 @@ Game.prototype = {
       var action = data.action;
 
       this.actions[type] = action;
-      console.log(this.actions);
     }.bind(this));
   },
 
@@ -147,7 +151,7 @@ Game.prototype = {
   },
 
   generateWalls: function() {
-    var wallY = this.game.rnd.integerInRange(this.game.height * -1, -128);
+    var wallY = Math.floor(Math.random() * ((this.game.height - 128) / 64) + 3) * -64;
     var wallGroup = this.walls.getFirstExists(false);
 
     if (!wallGroup) {
