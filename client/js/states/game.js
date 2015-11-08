@@ -4,8 +4,15 @@ var Block = require('../entities/block');
 
 function Game() {}
 
+// sprites and groups
 var character;
 var ground;
+
+// keyboard helpers
+var jumpUp;
+var jetpackUp;
+
+// clock stuff
 var elapsed;
 var clock;
 
@@ -23,6 +30,9 @@ Game.prototype = {
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.setTo(0, 900);
 
+    jumpUp = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    jetpackUp = this.input.keyboard.addKey(Phaser.Keyboard.UP);
+
     // (re)set timers
     elapsed = 0;
 
@@ -38,6 +48,9 @@ Game.prototype = {
     ground.body.allowGravity = false;
     world.addChild(ground);
     clock = this.add.bitmapText(32, 32, 'Audiowide', '', 20);
+
+    // set up all the basic key handlers
+    this.cursors = this.game.input.keyboard.createCursorKeys();
   },
 
   update: function () {
@@ -48,6 +61,24 @@ Game.prototype = {
 
     // handle collisions
     this.game.physics.arcade.collide(character, ground);
+
+    // handle movement
+    if (jumpUp.isDown && character.body.touching.down) {
+      character.body.velocity.y = -300;
+    }
+
+    if (jetpackUp.isDown && character.fuel > 0) {
+      character.body.velocity.y = -300;
+    }
+
+    if (this.cursors.left.isDown) {
+      character.body.velocity.x = -200;
+    } else if (this.cursors.right.isDown) {
+      character.body.velocity.x = 200;
+    } else {
+      character.body.velocity.x = 0;
+    }
+
   }
 };
 
