@@ -7,18 +7,18 @@ function ui (game, action) {
         game.game.world.filters = null;
     }
 
-    if (action === 'shake') {
+}
+
+function weather (game, action) {
+    if (action === 'rain') {
         gameEl.classList.add('shake');
 
         setTimeout(function () {
             gameEl.classList.remove('shake');
         }, 350);
 
-        delete game.actions.ui;
+        delete game.actions.weather;
     }
-}
-
-function weather (game, action) {
 }
 
 function character (game, action) {
