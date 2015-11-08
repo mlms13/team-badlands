@@ -1,7 +1,32 @@
+html,
+body
+    background #f6f6f6
+    color #444
+    text-align center
+
+a
+    border-bottom 1px dotted currentColor
+    color #444
+    text-decoration none
+    transition border, color 250ms
+
+    &:hover,
+    &:focus
+        color: #f00
 
 img
     height auto
     max-width 100%
+
+#game
+    margin 0 auto 10px
+    width 768px
+
+    canvas
+        border-radius 2px
+
+.faded
+    opacity 0.75
 
 .shake
     animation-name shake

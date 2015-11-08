@@ -5,7 +5,6 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     res.render('index', {
         title: 'Team Badlands',
-        content: 'hi',
         envPort: process.env.PORT || 8080
     });
 });

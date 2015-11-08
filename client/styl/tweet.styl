@@ -3,9 +3,23 @@
     border 1px solid #e6e6e6
     border-radius 2px
     color #3333333
+    opacity 0
     overflow hidden
     padding 8px
+    position absolute
+    right 10px
+    top 10px
+    transition opacity 250ms, visibility 0ms 250ms
+    visibility hidden
     width 325px
+
+    a
+        border none
+
+    &--visible
+        opacity 0.9
+        transition opacity 250ms
+        visibility visible
 
     &__user
         height 40px
@@ -16,4 +30,4 @@
         margin-left 56px
 
         &--highlight
-            background rgba(255, 255, 0, 0.5)
+            background rgba(255, 255, 0, 0.6)
