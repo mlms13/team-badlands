@@ -15,6 +15,8 @@ Preloader.prototype = {
     this.load.image('ice', 'assets/ice.png');
     this.load.bitmapFont('Audiowide Glow', 'assets/audiowide/glow.png', 'assets/audiowide/glow.fnt');
     this.load.bitmapFont('Audiowide', 'assets/audiowide/small.png', 'assets/audiowide/small.fnt');
+
+    this.load.script('Gray', 'assets/filters/Gray.js');
   },
   create: function () {
     this.game.state.start('Main Menu');

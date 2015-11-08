@@ -1,10 +1,13 @@
 
 function ui (game, action) {
-
+	if (action === 'blackandwhite') {
+		game.game.world.filters = [game.grayFilter];
+	} else if (action === 'color') {
+		game.game.world.filters = null;
+	}
 }
 
 function weather (game, action) {
-
 }
 
 function character (game, action) {

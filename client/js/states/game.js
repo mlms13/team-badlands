@@ -34,6 +34,9 @@ Game.prototype = {
     this.setupListeners();
     this.actions = {};
 
+    this.grayFilter = this.add.filter('Gray');
+    this.grayFilter.gray = 1;
+
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.physics.arcade.gravity.setTo(0, 900);
 
