@@ -3,6 +3,9 @@ var hbs = require('hbs');
 var path = require('path');
 var logger = require('morgan');
 
+// Internal Modules
+require('./server/twitterStream');
+
 // Routes
 var index = require('./routes/index');
 

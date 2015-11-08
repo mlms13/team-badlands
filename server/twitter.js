@@ -38,7 +38,12 @@ function search(query, count, next) {
 }
 
 function stream(cb) {
-    var stream = T.stream('statuses/filter', { locations: [ -124.848974, 24.396308, -66.885444, 49.384358 ], language: 'en' });
+
+    // Get a stream of tweets from the US
+    var stream = T.stream('statuses/filter', {
+        locations: [ -124.848974, 24.396308, -66.885444, 49.384358 ],
+        language: 'en',
+    });
 
     stream.on('tweet', function(tweet) {
         cb(null, tweet);
