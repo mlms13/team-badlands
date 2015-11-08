@@ -8,7 +8,7 @@ function WallGroup(game, parent) {
   Phaser.Group.call(this, game.game, parent);
 
   this.topWall = new Wall(this.game, 0, 0);
-  this.bottomWall = new Wall(this.game, 0, 128);
+  this.bottomWall = new Wall(this.game, 0, this.game.height + 128);
   this.add(this.topWall);
   this.add(this.bottomWall);
   this.hasScored = false;
@@ -31,12 +31,16 @@ WallGroup.prototype.checkWorldBounds = function() {
 
 WallGroup.prototype.reset = function(x, y) {
   this.topWall.reset(0, 0);
-  this.bottomWall.reset(0, 128);
+  this.bottomWall.reset(0, this.game.height + 128);
   this.x = x;
   this.y = y;
   this.setAll('body.velocity.x', groundSpeed);
   this.hasScored = false;
   this.exists = true;
+};
+
+WallGroup.prototype.stop = function() {
+  this.setAll('body.velocity.x', 0);
 };
 
 module.exports = WallGroup;

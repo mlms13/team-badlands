@@ -132,7 +132,7 @@ Game.prototype = {
   },
 
   generateWalls: function() {
-    var wallY = this.game.rnd.integerInRange(0, this.game.height);
+    var wallY = this.game.rnd.integerInRange(this.game.height * -1, -128);
     var wallGroup = this.walls.getFirstExists(false);
 
     if (!wallGroup) {
