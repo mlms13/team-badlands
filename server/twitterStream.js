@@ -1,6 +1,8 @@
 var Entities = require('html-entities').AllHtmlEntities;
 var _ = require('lodash');
 
+var template = require('../views/tweet.hbs');
+
 var twitter = require('./twitter');
 var socket = require('./socket');
 
@@ -56,7 +58,7 @@ function matchKeywords(tweet, keywords) {
         if (match) {
             matches.push(_.extend({
                 match: match,
-                tweet: tweet,
+                tweet: template(tweet),
             }, keywords[i]));
         }
     }
